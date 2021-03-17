@@ -1162,10 +1162,8 @@ where
 {
 	// Refuse if TTL is expired
 	let last_confirmed_height = w.last_confirmed_height()?;
-	if slate.ttl_cutoff_height != 0 {
-		if last_confirmed_height >= slate.ttl_cutoff_height {
-			return Err(ErrorKind::TransactionExpired.into());
-		}
+	if slate.ttl_cutoff_height != 0 && last_confirmed_height >= slate.ttl_cutoff_height {
+		return Err(ErrorKind::TransactionExpired.into());
 	}
 	Ok(())
 }

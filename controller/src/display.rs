@@ -236,44 +236,42 @@ pub fn txs(
 				bFB->kernel_excess,
 				bFb->tx_data,
 			]);
+		} else if t.confirmed {
+			table.add_row(row![
+				bFD->id,
+				bFb->entry_type,
+				bFD->slate_id,
+				bFB->creation_ts,
+				bFg->confirmed,
+				bFB->confirmation_ts,
+				bFD->num_inputs,
+				bFD->num_outputs,
+				bFG->amount_credited_str,
+				bFD->amount_debited_str,
+				bFD->fee,
+				bFG->net_diff,
+				bfG->payment_proof,
+				bFB->kernel_excess,
+				bFB->tx_data,
+			]);
 		} else {
-			if t.confirmed {
-				table.add_row(row![
-					bFD->id,
-					bFb->entry_type,
-					bFD->slate_id,
-					bFB->creation_ts,
-					bFg->confirmed,
-					bFB->confirmation_ts,
-					bFD->num_inputs,
-					bFD->num_outputs,
-					bFG->amount_credited_str,
-					bFD->amount_debited_str,
-					bFD->fee,
-					bFG->net_diff,
-					bfG->payment_proof,
-					bFB->kernel_excess,
-					bFB->tx_data,
-				]);
-			} else {
-				table.add_row(row![
-					bFD->id,
-					bFb->entry_type,
-					bFD->slate_id,
-					bFB->creation_ts,
-					bFR->confirmed,
-					bFB->confirmation_ts,
-					bFD->num_inputs,
-					bFD->num_outputs,
-					bFG->amount_credited_str,
-					bFD->amount_debited_str,
-					bFD->fee,
-					bFG->net_diff,
-					bfG->payment_proof,
-					bFB->kernel_excess,
-					bFB->tx_data,
-				]);
-			}
+			table.add_row(row![
+				bFD->id,
+				bFb->entry_type,
+				bFD->slate_id,
+				bFB->creation_ts,
+				bFR->confirmed,
+				bFB->confirmation_ts,
+				bFD->num_inputs,
+				bFD->num_outputs,
+				bFG->amount_credited_str,
+				bFD->amount_debited_str,
+				bFD->fee,
+				bFG->net_diff,
+				bfG->payment_proof,
+				bFB->kernel_excess,
+				bFB->tx_data,
+			]);
 		}
 	}
 
