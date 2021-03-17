@@ -227,8 +227,10 @@ impl GlobalWalletConfig {
 	}
 	/// Requires the path to a config file
 	pub fn new(file_path: &str) -> Result<GlobalWalletConfig, ConfigError> {
-		let mut return_value = GlobalWalletConfig::default();
-		return_value.config_file_path = Some(PathBuf::from(&file_path));
+		let return_value = GlobalWalletConfig {
+			config_file_path: Some(PathBuf::from(file_path)),
+			..Default::default()
+		};
 
 		// Config file path is given but not valid
 		let config_file = return_value.config_file_path.clone().unwrap();
