@@ -93,7 +93,7 @@ pub mod option_ov3_serde {
 		Option::<String>::deserialize(deserializer).and_then(|res| match res {
 			Some(s) => OnionV3Address::try_from(s.as_str())
 				.map_err(|err: OnionV3AddressError| Error::custom(format!("{:?}", err)))
-				.and_then(|a| Ok(Some(a))),
+				.map(|a| Some(a)),
 			None => Ok(None),
 		})
 	}
@@ -123,7 +123,6 @@ pub mod ov3_serde {
 		String::deserialize(deserializer).and_then(|s| {
 			OnionV3Address::try_from(s.as_str())
 				.map_err(|err: OnionV3AddressError| Error::custom(format!("{:?}", err)))
-				.and_then(Ok)
 		})
 	}
 }
@@ -206,10 +205,10 @@ pub mod dalek_xpubkey_serde {
 		use serde::de::Error;
 		String::deserialize(deserializer)
 			.and_then(|string| from_hex(&string).map_err(|err| Error::custom(err.to_string())))
-			.and_then(|bytes: Vec<u8>| {
+			.map(|bytes: Vec<u8>| {
 				let mut b = [0u8; 32];
 				b.copy_from_slice(&bytes[0..32]);
-				Ok(xDalekPublicKey::from(b))
+				xDalekPublicKey::from(b)
 			})
 	}
 }
@@ -351,10 +350,10 @@ pub mod option_xdalek_pubkey_serde {
 		Option::<String>::deserialize(deserializer).and_then(|res| match res {
 			Some(string) => from_hex(&string)
 				.map_err(|err| Error::custom(err.to_string()))
-				.and_then(|bytes: Vec<u8>| {
+				.map(|bytes: Vec<u8>| {
 					let mut b = [0u8; 32];
 					b.copy_from_slice(&bytes[0..32]);
-					Ok(Some(xDalekPublicKey::from(b)))
+					Some(xDalekPublicKey::from(b))
 				}),
 			None => Ok(None),
 		})
@@ -583,10 +582,10 @@ pub mod uuid_base64 {
 			.and_then(|string| {
 				base64::decode(&string).map_err(|err| Error::custom(err.to_string()))
 			})
-			.and_then(|bytes: Vec<u8>| {
+			.map(|bytes: Vec<u8>| {
 				let mut b = [0u8; 16];
 				b.copy_from_slice(&bytes[0..16]);
-				Ok(Uuid::from_bytes(b))
+				Uuid::from_bytes(b)
 			})
 	}
 }
