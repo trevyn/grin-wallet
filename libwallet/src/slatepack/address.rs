@@ -50,7 +50,7 @@ impl SlatepackAddress {
 		};
 		Self {
 			hrp: String::from(hrp),
-			pub_key: pub_key.clone(),
+			pub_key: *pub_key,
 		}
 	}
 

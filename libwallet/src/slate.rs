@@ -663,7 +663,7 @@ impl Slate {
 
 		let mut kernel = final_tx.kernels()[0];
 		kernel.excess = final_excess;
-		kernel.excess_sig = final_sig.clone();
+		kernel.excess_sig = *final_sig;
 
 		let final_tx = final_tx.clone().replace_kernel(kernel);
 
@@ -1001,7 +1001,7 @@ pub fn tx_from_slate_v4(slate: &SlateV4) -> Option<Transaction> {
 	for c in coms.iter() {
 		match &c.p {
 			Some(p) => {
-				outputs.push(Output::new(c.f.into(), c.c, p.clone()));
+				outputs.push(Output::new(c.f.into(), c.c, *p));
 			}
 			None => {
 				inputs.push(Input {

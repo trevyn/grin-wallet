@@ -142,15 +142,14 @@ fn real_main() -> i32 {
 	log_build_info();
 
 	global::init_global_chain_type(
-		config
+		*config
 			.members
 			.as_ref()
 			.unwrap()
 			.wallet
 			.chain_type
 			.as_ref()
-			.unwrap()
-			.clone(),
+			.unwrap(),
 	);
 
 	global::init_global_accept_fee_base(config.members.as_ref().unwrap().wallet.accept_fee_base());

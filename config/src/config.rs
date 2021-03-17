@@ -209,7 +209,7 @@ impl GlobalWalletConfig {
 	pub fn for_chain(chain_type: &global::ChainTypes) -> GlobalWalletConfig {
 		let mut defaults_conf = GlobalWalletConfig::default();
 		let mut defaults = &mut defaults_conf.members.as_mut().unwrap().wallet;
-		defaults.chain_type = Some(chain_type.clone());
+		defaults.chain_type = Some(*chain_type);
 
 		match *chain_type {
 			global::ChainTypes::Mainnet => {}
