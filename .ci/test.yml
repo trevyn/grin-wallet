@@ -3,9 +3,15 @@ steps:
       refreshenv && cargo test --all
     displayName: Windows Cargo Test
     condition: and(eq( variables['Agent.OS'], 'Windows_NT' ), eq( variables['CI_JOB'], 'test-all' ))
-  - script: 'cargo test --all'
+  - script: 'ROARING_ARCH=x86-64-v2 cargo test --all'
     displayName: macOS Cargo Test
     condition: and(eq( variables['Agent.OS'], 'Darwin' ), eq( variables['CI_JOB'], 'test-all' ))
-  - script: '.ci/general-jobs'
+  - script: |
+      cargo install cargo-lipo
+      rustup target add aarch64-apple-ios x86_64-apple-ios
+      cargo lipo --targets aarch64-apple-ios x86_64-apple-ios --release
+    displayName: iOS Cargo Lipo Build
+    condition: and(eq( variables['Agent.OS'], 'Darwin' ), eq( variables['CI_JOB'], 'test-all' ))
+  - script: 'ROARING_ARCH=x86-64-v2 .ci/general-jobs'
     displayName: Linux Cargo Test
     condition: eq( variables['Agent.OS'], 'Linux' )
