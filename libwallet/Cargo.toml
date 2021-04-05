@@ -10,9 +10,6 @@ exclude = ["**/*.grin", "**/*.grin2"]
 #build = "src/build/build.rs"
 edition = "2018"
 
-[lib]
-crate-type = ["lib", "staticlib"]
-
 [dependencies]
 blake2-rfc = "0.2"
 failure = "0.1"
